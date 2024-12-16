@@ -504,6 +504,10 @@ void CopyEffects::copy_to_atlas_fb(RID p_source_rd_texture, RID p_dest_framebuff
 
 	memset(&copy_to_fb.push_constant, 0, sizeof(CopyToFbPushConstant));
 
+	const Size2 dest_size = RD::get_singleton()->framebuffer_get_size(p_dest_framebuffer);
+	copy_to_fb.push_constant.pixel_size[0] = 1.0f / dest_size.width;
+	copy_to_fb.push_constant.pixel_size[1] = 1.0f / dest_size.height;
+
 	copy_to_fb.push_constant.flags |= COPY_TO_FB_FLAG_USE_SECTION;
 	copy_to_fb.push_constant.section[0] = p_uv_rect.position.x;
 	copy_to_fb.push_constant.section[1] = p_uv_rect.position.y;

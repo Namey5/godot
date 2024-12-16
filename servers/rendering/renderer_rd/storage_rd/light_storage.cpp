@@ -930,6 +930,13 @@ void LightStorage::update_light_buffers(RenderDataRD *p_render_data, const Paged
 				light_data.projector_rect[1] = rect.position.y;
 				light_data.projector_rect[2] = rect.size.width;
 				light_data.projector_rect[3] = rect.size.height * 0.5; //used by dp, so needs to be half
+
+				// Add half-texel offsets to avoid dp edge artifacts
+				const Size2i atlas_size = texture_storage->decal_atlas.size;
+				light_data.projector_rect[0] += 0.5 / float(atlas_size.width);
+				light_data.projector_rect[1] += 0.5 / float(atlas_size.height);
+				light_data.projector_rect[2] -= 1.0 / float(atlas_size.width);
+				light_data.projector_rect[3] -= 1.0 / float(atlas_size.height);
 			}
 		} else {
 			light_data.projector_rect[0] = 0;

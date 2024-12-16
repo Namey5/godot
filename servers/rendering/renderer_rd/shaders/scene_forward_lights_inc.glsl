@@ -594,7 +594,9 @@ void light_process_omni(uint idx, vec3 vertex, vec3 eye_vec, vec3 normal, vec3 v
 		vec4 atlas_rect = omni_lights.data[idx].projector_rect;
 
 		if (local_v.z >= 0.0) {
-			atlas_rect.y += atlas_rect.w;
+			// Need to offset 1px to align border
+			// FIXME: use dynamic texel size w/ mipmap derivatives
+			atlas_rect.y += atlas_rect.w + (1.0 / 512.0);
 		}
 
 		local_v.z = 1.0 + abs(local_v.z);

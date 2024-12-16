@@ -168,6 +168,10 @@ void main() {
 		//uv.y = 1.0 - uv.y;
 		uv = 1.0 - uv;
 	}
+	
+	// Add a 1px border for dp edge artifacts (double for y-axis as it works at half scale)
+	vec2 border = params.pixel_size * vec2(2.0, 4.0);
+	uv = (uv * (1.0 + params.pixel_size)) - params.pixel_size * 0.5;
 #endif /* MODE_PANORAMA_TO_DP */
 
 #ifdef USE_MULTIVIEW
